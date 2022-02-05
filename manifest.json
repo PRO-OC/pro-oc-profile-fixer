@@ -1,0 +1,25 @@
+{
+  "name": "PRO OC Profile fixer",
+  "version": "0.0.1",
+  "author": "Lukáš Drahník <ldrahnik@gmail.com>",
+  "manifest_version": 2,
+  "description": "",
+  "background": {
+    "scripts": [ "background/background.js" ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [{
+    "matches": [
+      "*://*.ksrzis.cz/*"
+    ],
+    "js": ["content/content.js"]
+  }],
+  "permissions": [
+    "*://*.ksrzis.cz/*",
+    "tabs",
+    "cookies"
+  ]
+}

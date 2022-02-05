@@ -1,0 +1,28 @@
+{
+  "name": "pro-oc-profile-fixer",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Lukáš Drahník <ldrahnik@gmail.com>",
+  "main": "index.js",
+  "dependencies": {
+    "node-xlsx": "^0.17.2",
+    "xlsx": "^0.17.4",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pro-oc/pro-vfn-profile-fixer.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pro-oc/pro-vfn-profile-fixer/issues"
+  },
+  "homepage": "https://github.com/pro-oc/pro-vfn-profile-fixer#readme",
+  "engines": {
+    "node": "14.x"
+  }
+}
