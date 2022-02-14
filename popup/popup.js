@@ -159,6 +159,10 @@ function tryToSloucitForeignProfiles(index, ZadankaData, SlucujiciProfil, Slucov
                                 
                             console.log("DEBUG: Zadanka: " + ZadankaData.TestovanyNarodnostKod, ZadankaData.TestovanyNarodnostNazev + ", PacientInfo NarodnostKod a RobObcanstviZemeKod: " + SlucovanyProfil.Pacient_NarodnostKod, SlucovanyProfil.Pacient_RobObcanstviZemeKod);
 
+                            if(SlucovanyProfil.PacientDatumNarozeniText.startsWith("1.") && ZadankaData.TestovanyDatumNarozeniText != SlucovanyProfil.PacientDatumNarozeniText) {
+                                console.log("DEBUG: Datum narození pacient: " + SlucovanyProfil.PacientDatumNarozeniText, ", žádanka: " + ZadankaData.TestovanyDatumNarozeniText);   
+                            }
+
                             // podařilo se sloučit?
                             if(xhrSlucovanyProfil.status != 200) { 
                                 console.log("Vyžádaná úprava k Excel řádku č. " + index + ". " + KoloOprav + ". kolo oprav. Cizinec. Žádanka č. " + ZadankaData.Cislo + ". Byl sloučený pacient č. " + SlucovanyProfil.Cislo + " do pacienta č. " + SlucujiciProfil.Cislo + ".");
