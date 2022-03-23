@@ -237,7 +237,7 @@ function tryToFindForeignProfilesByZadankaData(ZadankaData, callback) {
     var searchVariantJmenoPrijmeniDatumNarozeni = {
         Jmeno: ZadankaData.TestovanyJmeno,
         Prijmeni: ZadankaData.TestovanyPrijmeni,
-        DatumNarozeni: ZadankaData.TestovanyDatumNarozeniText,
+        CisloPojistence: ZadankaData.TestovanyCisloPojistence,
         StatniPrislusnost: ZadankaData.TestovanyNarodnostKod,
         TypVyhledani: "JmenoPrijmeniRC"
     };
@@ -245,7 +245,7 @@ function tryToFindForeignProfilesByZadankaData(ZadankaData, callback) {
     var searchVariantJmenoPrijmeniDatumNarozeniSpatne = {
         Jmeno: ZadankaData.TestovanyJmeno,
         Prijmeni: ZadankaData.TestovanyPrijmeni,
-        DatumNarozeni: DatumNarozeniSpatneVygenerovanyZCislaPojistence,
+        CisloPojistence: ZadankaData.TestovanyCisloPojistence,
         StatniPrislusnost: ZadankaData.TestovanyNarodnostKod,
         TypVyhledani: "JmenoPrijmeniRC"
     };
@@ -631,7 +631,7 @@ function getRegistrCUDVyhledaniPacientaUrlParams(zadanka) {
         urlParams.set("Jmeno", zadanka.Jmeno);
         urlParams.set("Prijmeni", zadanka.Prijmeni);
     }
-    if(zadanka.CisloPojistence) {
+    if(zadanka.CisloPojistence && zadanka.TypVyhledani && zadanka.TypVyhledani == "CizinecCisloPojistence") {
         urlParams.set("CisloPojistence", zadanka.CisloPojistence);
     }
     if(zadanka.StatniPrislusnost == "CZ") {
