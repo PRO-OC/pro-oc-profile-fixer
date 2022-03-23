@@ -13,7 +13,7 @@ Osobní informace pacientů podmíněné přihlášením do modulu [Pacienti COV
 Rozšíření provádí úpravy v tomto pořadí.
 
 1. Rozšíření hledá a slučuje profily. Za slučující profil považuje ten jehož číslo je uvedené ve vstupním souboru. Duplikovaný profil může vzniknout v případě, že:
-- z vygenerovaného čísla pojištěnce pro samoplátce nelze určit den narození, je mimo kalendářní rozsah, poté je vytvořený profil s datumem narození 1.
+- datum narození v zadaném vyšetření se neshoduje se zadaným v žádance, ÚZIS poté založí nový profil pokud neexistuje
 - existuje profil kde se shoduje jméno, přijmení a datum narození, ale číslo pojištěnce je jiné
 - existuje profil cizince, který již ale dostal povolení k pobytu nebo občanství a má přidělené rodné číslo
 - výjimky (manuální vytvoření duplikovaného profilu nebo chyby při vytváření žádanky jako jsou prohození jména a přijmení, více jmen nebo přijmení a vynechání některého)

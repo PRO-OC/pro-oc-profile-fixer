@@ -232,6 +232,8 @@ function getSpatneStatniPrislustnost(StatniPrislusnost) {
 
 function tryToFindForeignProfilesByZadankaData(ZadankaData, callback) {
 
+    var DatumNarozeniSpatneVygenerovanyZCislaPojistence = getDatumNarozeniZCisloPojistence(ZadankaData.TestovanyCisloPojistence);  
+
     var searchVariantJmenoPrijmeniDatumNarozeni = {
         Jmeno: ZadankaData.TestovanyJmeno,
         Prijmeni: ZadankaData.TestovanyPrijmeni,
@@ -243,7 +245,7 @@ function tryToFindForeignProfilesByZadankaData(ZadankaData, callback) {
     var searchVariantJmenoPrijmeniDatumNarozeniSpatne = {
         Jmeno: ZadankaData.TestovanyJmeno,
         Prijmeni: ZadankaData.TestovanyPrijmeni,
-        DatumNarozeni:  "01" + ZadankaData.TestovanyDatumNarozeniText.substring(ZadankaData.TestovanyDatumNarozeniText.indexOf("."), ZadankaData.TestovanyDatumNarozeniText.length),
+        DatumNarozeni: DatumNarozeniSpatneVygenerovanyZCislaPojistence,
         StatniPrislusnost: ZadankaData.TestovanyNarodnostKod,
         TypVyhledani: "JmenoPrijmeniRC"
     };
@@ -268,7 +270,7 @@ function tryToFindForeignProfilesByZadankaData(ZadankaData, callback) {
     var searchVariantJmenoPrijmeniDatumNarozeniMistoNarozeniSpatneDatumNarozeni = {
         Jmeno: ZadankaData.TestovanyJmeno,
         Prijmeni: ZadankaData.TestovanyPrijmeni,
-        DatumNarozeni: "01" + ZadankaData.TestovanyDatumNarozeniText.substring(ZadankaData.TestovanyDatumNarozeniText.indexOf("."), ZadankaData.TestovanyDatumNarozeniText.length),
+        DatumNarozeni: DatumNarozeniSpatneVygenerovanyZCislaPojistence,
         StatniPrislusnost: ZadankaData.TestovanyNarodnostKod,
         TypVyhledani: "JmenoPrijmeniDatumNarozeniMistoNarozeni"
     };
@@ -276,7 +278,7 @@ function tryToFindForeignProfilesByZadankaData(ZadankaData, callback) {
     var searchVariantJmenoPrijmeniDatumNarozeniMistoNarozeniSpatneDatumNarozeniSpatneStatniPrislusnost = {
         Jmeno: ZadankaData.TestovanyJmeno,
         Prijmeni: ZadankaData.TestovanyPrijmeni,
-        DatumNarozeni: "01" + ZadankaData.TestovanyDatumNarozeniText.substring(ZadankaData.TestovanyDatumNarozeniText.indexOf("."), ZadankaData.TestovanyDatumNarozeniText.length),
+        DatumNarozeni: DatumNarozeniSpatneVygenerovanyZCislaPojistence,
         StatniPrislusnost: getSpatneStatniPrislustnost(ZadankaData.TestovanyNarodnostKod),
         TypVyhledani: "JmenoPrijmeniDatumNarozeniMistoNarozeni"
     };
@@ -300,7 +302,7 @@ function tryToFindForeignProfilesByZadankaData(ZadankaData, callback) {
     var searchVariantCizinecJmenoPrijmeniDatumNarozniObcanstviSpatneDatumNarozeniSpatneStatniPrislusnost = {
         Jmeno: ZadankaData.TestovanyJmeno,
         Prijmeni: ZadankaData.TestovanyPrijmeni,
-        DatumNarozeni: "01" + ZadankaData.TestovanyDatumNarozeniText.substring(ZadankaData.TestovanyDatumNarozeniText.indexOf("."), ZadankaData.TestovanyDatumNarozeniText.length),
+        DatumNarozeni: DatumNarozeniSpatneVygenerovanyZCislaPojistence,
         StatniPrislusnost: getSpatneStatniPrislustnost(ZadankaData.TestovanyNarodnostKod),
         TypVyhledani: "CizinecJmenoPrijmeniDatumNarozniObcanstvi"
     };
@@ -308,7 +310,7 @@ function tryToFindForeignProfilesByZadankaData(ZadankaData, callback) {
     var searchVariantCizinecJmenoPrijmeniDatumNarozniObcanstviSpatneDatumNarozeni = {
         Jmeno: ZadankaData.TestovanyJmeno,
         Prijmeni: ZadankaData.TestovanyPrijmeni,
-        DatumNarozeni: "01" + ZadankaData.TestovanyDatumNarozeniText.substring(ZadankaData.TestovanyDatumNarozeniText.indexOf("."), ZadankaData.TestovanyDatumNarozeniText.length),
+        DatumNarozeni: DatumNarozeniSpatneVygenerovanyZCislaPojistence,
         StatniPrislusnost: ZadankaData.TestovanyNarodnostKod,
         TypVyhledani: "CizinecJmenoPrijmeniDatumNarozniObcanstvi"
     };
@@ -386,13 +388,81 @@ function tryToFindForeignProfilesByZadankaData(ZadankaData, callback) {
     });
 }
 
+function getDatumNarozeniZCisloPojistence(cisloPojistence) {
+    if (!cisloPojistence) {
+      return "";
+    }
+
+    var year = cisloPojistence.substring(0, 2);
+    var month = cisloPojistence.substring(2, 4);
+    var day = cisloPojistence.substring(4, 6);
+
+    if(day > 50) {
+      day = parseInt(day) - 50;
+    }
+
+    if(month > 50) {
+        month = parseInt(month) - 50;
+      }
+
+    var actualYearLast2Pos = ((new Date()).getFullYear()).toString().substr(-2);
+    if(year < actualYearLast2Pos) {
+      year = "20" + year;
+    } else {
+      year = "19" + year;
+    }
+
+    if(month == 0 || month > 12) {
+        month = 1;
+    }
+
+    switch(month) {
+        case 1:
+            day = (day == 0 || day > 31) ? 1 : day;
+            break;
+        case 2:
+            day = (day == 0 || day > 28) ? 1 : day;
+            break;
+        case 3:
+            day = (day == 0 || day > 31) ? 1 : day;
+            break;
+        case 4:
+            day = (day == 0 || day > 30) ? 1 : day;
+            break;
+        case 5:
+            day = (day == 0 || day > 31) ? 1 : day;
+            break;
+        case 6:
+            day = (day == 0 || day > 30) ? 1 : day;
+            break;
+        case 7:
+            day = (day == 0 || day > 31) ? 1 : day;
+            break;
+        case 8:
+            day = (day == 0 || day > 31) ? 1 : day;
+            break;
+        case 9:
+            day = (day == 0 || day > 30) ? 1 : day;
+            break;
+        case 10:
+            day = (day == 0 || day > 31) ? 1 : day;
+            break;
+        case 11:
+            day = (day == 0 || day > 30) ? 1 : day;
+            break;
+        case 12:
+            day = (day == 0 || day > 31) ? 1 : day;
+            break;
+    }
+
+    return day + "." + month + "." + year;
+}
+
 function tryToEditForeignProfile(index, ZadankaData, ProfileInfo, KoloOprav, onEnd) {
     var url = ProfileInfo.EditLink;
 
-    var ProfileInfoDayOfDatumNarozeniText = (parseInt(ProfileInfo.PacientDatumNarozeniText.substring(0, ProfileInfo.PacientDatumNarozeniText.indexOf(".")))).toString();
-
     var urlParams = getRegistrCUDZadankyPacientDetailEditUrlParams(
-        ProfileInfoDayOfDatumNarozeniText == "1" && ZadankaData.TestovanyDatumNarozeniText != ProfileInfo.PacientDatumNarozeniText ? ProfileInfo.TestovanyDatumNarozeniText : null,
+        (ZadankaData.TestovanyDatumNarozeniText != ProfileInfo.PacientDatumNarozeniText && ProfileInfo.PacientDatumNarozeniText == getDatumNarozeniZCisloPojistence(ZadankaData.TestovanyCisloPojistence)) ? ZadankaData.TestovanyDatumNarozeniText : null,
         !ProfileInfo.Telefon ? ZadankaData.TestovanyTelefon : null,
         !ProfileInfo.Email ? ZadankaData.TestovanyEmail : null
     );
@@ -402,8 +472,8 @@ function tryToEditForeignProfile(index, ZadankaData, ProfileInfo, KoloOprav, onE
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE) {
-            if(xhr.status == 200) {      
-                if(ProfileInfoDayOfDatumNarozeniText == "1" && ZadankaData.TestovanyDatumNarozeniText != ProfileInfo.PacientDatumNarozeniText) {                    
+            if(xhr.status == 200) {
+                if(ZadankaData.TestovanyDatumNarozeniText != ProfileInfo.PacientDatumNarozeniText && ProfileInfo.PacientDatumNarozeniText == getDatumNarozeniZCisloPojistence(ZadankaData.TestovanyCisloPojistence)) {
                     console.log("Vyžádaná úprava k Excel řádku č. " + index+ ". " + KoloOprav + ". kolo oprav. Cizinec. Žádanka č. " + ZadankaData.Cislo + ". Byl upravený datum narození u pacienta č. " + ProfileInfo.Cislo + ".");
                 } if(!ProfileInfo.Telefon && ZadankaData.TestovanyTelefon) {
                     console.log("Vyžádaná úprava k Excel řádku č. " + index + ". " + KoloOprav + ". kolo oprav. Cizinec. Žádanka č. " + ZadankaData.Cislo + ". Byl upravený telefon u pacienta č. " + ProfileInfo.Cislo + ".");
